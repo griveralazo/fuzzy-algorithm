@@ -1,0 +1,61 @@
+################################ README ####################################
+
+This readme it's a step-by-step installation guide of the fuzzy-algorithm.
+
+** In MACOS, WINDOWS OS it's highly recommended to work in an Anaconda envi-
+roment, because comes with pre-loaded libraries such: pandas, matplotlib...
+
+
+############################################################################
+-----------------------------INSTALATION REQUIREMENTS-----------------------
+
+---  libraries  ----- version ----- 
+
+---	 cvxopt		----- 1.2.3	  ----- 	
+---	 postgres   ----- 
+---  psycopg2   ----- 2.8.3   -----
+---  sqlalchemy ----- 1.3.6   -----
+---  collection -----         -----
+---  pandas     ----- 0.25.0  -----
+
+############################################################################
+-------------------------------- CONFIGURATION  ----------------------------
+
+In order to run correctly the algorithm, you need to configure some specifi-
+cation.
+
+............................................................................
+
+
+In ConnectionData.py file
+
+'postgresql://postgres_user:postgres_user_password@x.x.x.x/database_name' 
+                                                  x.x.x.x  ----- ip server
+query = "SELECT * FROM table_name"
+
+............................................................................
+
+In df_statistics.py in "/pm4py/algo/discovery/dfg/adapters/pandas/"
+You have to add case id, start timestamp and activity table names from your 
+db.
+
+# to get rows belonging to same case ID together, we need to sort on case ID
+
+
+if sort_caseid_required:
+    if sort_timestamp_along_case_id:
+    	# example: 
+    	# if case_id is the name of the column (from table)
+        case_id_glue = 'case_id'
+		# if start_time is the name of the column (from table)
+        timestamp_key = 'start_timestamp'  
+        # if activivity is the name of the column (from table)
+        activity_key = 'activity' 
+        df = df.sort_values([case_id_glue, timestamp_key])
+    else:
+        df = df.sort_values(case_id_glue)
+
+............................................................................
+
+
+
